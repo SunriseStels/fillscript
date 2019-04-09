@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+<body></body>
+<script type="text/javascript">
+let X = 5;
+let arr = [
+    [0, 0, 1, 1, 1, 0, 0, 0],
+    [0, 1, 0, 0, 0, 1, 0, 0],
+    [0, 0, 1, 0, 0, 0, 1, 0],
+    [0, 1, 0, X, 0, 1, 0, 0],
+    [0, 0, 1, 1, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0]
+];
+
+let [i, j] = getPoint();
+
+arr[i][j] = 0;
+
+fillCell(i, j);
+
+console.log(arr);
+
+function getPoint() {
+    let i, j;
+
+    arr.some((line, index) => {
+        let xIndex = line.findIndex(a => a === X);
+
+        if (xIndex !== -1) {
+            i = index;
+            j = xIndex;
+            return true;
+        }
+
+        return false;
+    });
+
+    return [i, j];
+}
+
+function fillCell(i, j) {
+    if (arr[i][j] !== 0) {
+        return;
+    }
+
+    arr[i][j] = 2;
+
+    [
+        [i - 1, j],
+        [i, j + 1],
+        [i + 1, j],
+        [i, j - 1],
+    ].forEach(([i, j]) => {
+        if (i >= 0 &&
+            i < arr.length &&
+            j >= 0 &&
+            j < arr[i].length) {
+            fillCell(i, j);
+        }
+    });
+}
+</script>
+</html>
